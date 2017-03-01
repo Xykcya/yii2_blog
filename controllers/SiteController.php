@@ -9,6 +9,22 @@ use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
 
+
+use app\models\RegForm;
+
+use app\models\User;
+use app\models\Profile;
+use app\models\SendEmailForm;
+use app\models\ResetPasswordForm;
+use yii\base\InvalidParamException;
+use yii\web\BadRequestHttpException;
+use yii\helpers\Html;
+use yii\helpers\Url;
+use app\models\AccountActivation;
+
+
+
+
 class SiteController extends Controller
 {
     /**
@@ -122,6 +138,44 @@ class SiteController extends Controller
     {
         return $this->render('about');
     }
+
+
+    public function actionReg()
+    {
+        $emailActivation = Yii::$app->params['emailActivation'];
+        $model = $emailActivation ? new RegForm(['scenario' => 'emailActivation']) : new RegForm();
+
+        if ($model->load(Yii::$app->request->post()) && $model->validate()):
+            if ($user = $model->reg()):
+                if ($user->status === User::STATUS_ACTIVE):
+                    if (Yii::$app->getUser()->login($user)):
+                        return $this->goHome();
+                    endif;
+                else:
+                    if($model->sendActivationEmail($user)):
+                        Yii::$app->session->setFlash('success', 'Письмо с активацией отправлено на емайл <strong>'.Html::encode($user->email).'</strong> (проверьте папку спам).');
+                    else:
+                        Yii::$app->session->setFlash('error', 'Ошибка. Письмо не отправлено.');
+                        Yii::error('Ошибка отправки письма.');
+                    endif;
+                    return $this->refresh();
+                endif;
+            else:
+                Yii::$app->session->setFlash('error', 'Возникла ошибка при регистрации.');
+                Yii::error('Ошибка при регистрации');
+                return $this->refresh();
+            endif;
+        endif;
+
+        return $this->render(
+            'reg',
+            [
+                'model' => $model
+            ]
+        );
+    }
+
+
 
 
 

@@ -1,17 +1,50 @@
 <?php
 
 namespace app\models;
-use yii\db\ActiveRecord;
 
+use Yii;
+
+use yii\db\ActiveRecord;
+use yii\behaviors\TimestampBehavior;
 class User extends ActiveRecord implements \yii\web\IdentityInterface
 {
+    const STATUS_DELETED = 0;
+    const STATUS_NOT_ACTIVE = 1;
+    const STATUS_ACTIVE = 10;
+
 //    public $id;
 //    public $username;
 //    public $password;
 //    public $authKey;
 //    public $accessToken;
+    /**
+     * This is the model class for table "user".
+     * @property string $auth_key
+     */
+
+    //helpers
+    public function sePassword($password){
+        $this->password_hash = Yii::$app->security->generatePasswordHash($password);
+    }
+
+    public function generateAuthKey(){//random auth string
+        $this->auth_key = Yii::$app->security->generateRandomString();
+    }
+
+    public function validatePassword($password)
+    {
+        return Yii::$app->security->validatePassword($password, $this->password_hash);
+    }
 
 
+    //end helpers
+
+    public function behaviors()
+    {
+        return [
+            TimestampBehavior::className()
+        ];
+    }
 
 
     /**
@@ -59,11 +92,11 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface
     }
 
     /**
-     * @inheritdoc
+     * @return string current user auth key
      */
     public function getAuthKey()
     {
-        return $this->authKey;
+        return $this->auth_key;
     }
 
     /**
@@ -71,17 +104,17 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface
      */
     public function validateAuthKey($authKey)
     {
-        return $this->authKey === $authKey;
+        return $this->auth_key === $authKey;
     }
 
     /**
-     * Validates password
-     *
-     * @param string $password password to validate
-     * @return bool if password provided is valid for current user
+     * Генерирует хеш из введенного пароля и присваивает (при записи) полученное значение полю password_hash таблицы user для
+     * нового пользователя.
+     * Вызываеться из модели RegForm.
      */
-    public function validatePassword($password)
+    public function setPassword($password)
     {
-        return $this->password === $password;
+        $this->password_hash = Yii::$app->security->generatePasswordHash($password);
     }
+
 }
