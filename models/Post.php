@@ -18,7 +18,7 @@ class Post extends ActiveRecord
     {
         return [
             // the name, email, subject and body attributes are required
-            [['content', 'date_created', 'date_modified'], 'required']
+            [[ 'header' ,'content', 'date_created', 'date_modified'], 'required']
 
         ];
     }

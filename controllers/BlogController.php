@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use app\models\Post;
 use Yii;
+use yii\data\Pagination;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
@@ -12,34 +13,26 @@ use app\models\ContactForm;
 
 class BlogController extends Controller
 {
-    public $layout = 'blog';
+//    public $layout = 'site';
 
-    public function actionIndex()
+    public function actionIndex()//todo pagination
     {
         $posts = array();
 
-        $post = new Post();
 
-        var_dump($post->attributes() );
+        $query = Post::find()->where(['display' => 1]);
+        $count = $query->count();
+        $pagination = new Pagination(['totalCount' => $count]);
+        $pagination->setPageSize(3);
+        $posts = $query->offset($pagination->offset)
+            ->limit($pagination->limit)
+            ->all();
 
-        $post->content = 'content'.date('H:i:s');
-        $post->date_created = date('Y-m-d H:i:s');
-        $post->date_modified = date('Y-m-d H:i:s');
-        $post->save();
 
-        var_dump($post);
-//        print_r($post);
 
-        exit();
-
-//        echo 'index';
-//
-//        exit();
         return $this->render('blog', ['posts' => $posts]);
     }
 
-    public function actionPost($id)
-    {
-        echo 'post';exit();
-    }
+
+
 }
