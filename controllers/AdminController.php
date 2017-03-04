@@ -14,14 +14,27 @@ class AdminController extends Controller
 
     //todo ограничить доступ к этому контроллеру всем кроме админов
 
-    public function actionIndex()//todo pagination
+    public function actionIndex()
     {
 
-        if (\Yii::$app->user->can('admin')) {
 
-        }
+
         return $this->render('index');
     }
+
+    public function beforeControllerAction($controller, $action)
+    {
+        if (parent::beforeControllerAction($controller, $action)) {
+            if (!\Yii::$app->user->can('admin')) {
+                {
+                    Yii::app()->request->redirect(Yii::app()->homeUrl);
+                }
+                return true;
+            } else
+                return false;
+        }
+    }
+
 
     public function actionUsersList(){
 

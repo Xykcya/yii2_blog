@@ -41,14 +41,14 @@ $config = [
         'authManager' => [
             'class' => 'yii\rbac\DbManager',
         ],
-        /*
+
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
-            'rules' => [
-            ],
+//            'rules' => [
+//            ],
         ],
-        */
+
     ],
     'params' => $params,
 ];
