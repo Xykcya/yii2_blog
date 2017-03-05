@@ -44,3 +44,14 @@ $this->params['breadcrumbs'][] = $this->title;
     ]) ?>
 
 </div>
+
+<div id="comments">
+    <?php if(sizeof($model->getComments())>0): ?>
+
+
+        <?php $this->render('_comments',array(
+            'post'=>$model,
+            'comments'=>$model->comments,
+        )); ?>
+    <?php endif; ?>
+</div>

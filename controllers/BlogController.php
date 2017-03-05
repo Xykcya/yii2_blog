@@ -20,7 +20,7 @@ class BlogController extends Controller
         $posts = array();
 
 
-        $query = Post::find()->where(['display' => 1]);
+        $query = Post::find();
         $count = $query->count();
         $pagination = new Pagination(['totalCount' => $count]);
         $pagination->setPageSize(3);

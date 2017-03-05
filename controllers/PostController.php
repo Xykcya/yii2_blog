@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\Comments;
 use Yii;
 use app\models\Post;
 use app\models\PostSearch;
@@ -37,6 +38,8 @@ class PostController extends Controller
      */
     public function actionView($id)
     {
+
+
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);

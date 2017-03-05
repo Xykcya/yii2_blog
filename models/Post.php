@@ -57,6 +57,8 @@ class Post extends \yii\db\ActiveRecord
         return 'post';
     }
 
+
+
     /**
      * @inheritdoc
      */
@@ -94,4 +96,10 @@ class Post extends \yii\db\ActiveRecord
             'category_id' => 'Category ID',
         ];
     }
+
+    public function getComments()
+    {
+        return $this->hasMany(Comments::className(), ['post_id' => 'id']);
+    }
+
 }

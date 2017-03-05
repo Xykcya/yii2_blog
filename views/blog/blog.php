@@ -19,7 +19,7 @@ echo 'posts sizeof:'.sizeof($posts);
     </p>
 
     <?php foreach($posts as $key=>$post): ?>
-        <h2><a href="<?= Url::to(['post/view', 'id' => $post->id]) ?>"><?php echo $post->header; ?></a></h2>
+        <h2><a href="<?= Url::to(['post/view', 'id' => $post->id]) ?>"><?php echo $post->title; ?></a></h2>
     <?php endforeach; ?>
 
 </div>
