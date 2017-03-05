@@ -16,7 +16,7 @@ class m170305_195246_create_comments extends Migration
             'email' => $this->text(),
             'content' => $this->text()->notNull(),
             'parent_id' => $this->integer(),
-            'date_creating' => $this->dateTime()->notNull()
+            'date_created' => $this->dateTime()->notNull()
         ]);
 //        $this->createIndex('comment_id_index', 'id', ['post_id', 'tag_id']);
 

@@ -11,6 +11,7 @@ use yii\db\Expression;
  *
  * @property integer $id
  * @property integer $post_id
+ * @property string $name
  * @property string $content
  * @property integer $parent_id
  * @property string $date_created
@@ -31,7 +32,7 @@ class Comments extends \yii\db\ActiveRecord
             [
                 'class' => TimestampBehavior::className(),
                 'attributes' => [
-                    ActiveRecord::EVENT_BEFORE_INSERT => ['date_creating'],
+                    ActiveRecord::EVENT_BEFORE_INSERT => ['date_created'],
                 ],
                 'value' => new Expression('NOW()'),
             ]
@@ -45,9 +46,9 @@ class Comments extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['post_id', 'content', 'date_created'], 'required'],
+            [['post_id', 'content', 'name'], 'required'],
             [['post_id', 'parent_id'], 'integer'],
-            [['content'], 'string'],
+            [['content', 'name'], 'string'],
             [['date_created'], 'safe'],
         ];
     }
@@ -60,6 +61,7 @@ class Comments extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'post_id' => 'Post ID',
+            'name' => 'Name',
             'content' => 'Content',
             'parent_id' => 'Parent ID',
             'date_created' => 'Date Created',

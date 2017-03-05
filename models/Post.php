@@ -102,4 +102,11 @@ class Post extends \yii\db\ActiveRecord
         return $this->hasMany(Comments::className(), ['post_id' => 'id']);
     }
 
+    public function addComment($comment)
+    {
+        $comment->post_id = $this->id;
+        return $comment->save();
+    }
+
+
 }

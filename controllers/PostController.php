@@ -38,13 +38,37 @@ class PostController extends Controller
      */
     public function actionView($id)
     {
+        $post = $this->findModel($id);
+        $comment = $this->newComment($post);
+        $comment->post_id = $post->id;
+        $comment->date_created = date('Y-m-d H:i:s');//hack todo
+
+
+
+
+
+        if ($comment->load(Yii::$app->request->post() ) && $comment->save()) {
+            return $this->redirect(['view', 'id' => $id]);
+        }
 
 
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $post,
+            'comment' => $comment
         ]);
     }
 
+    protected function newComment($post)
+    {
+        $comment = new Comments();
+        if(isset($_POST['Comment']))
+        {
+            $post->addComment($comment);
+            $comment->post_id = $post->id;
+
+        }
+        return $comment;
+    }
 
 
 
