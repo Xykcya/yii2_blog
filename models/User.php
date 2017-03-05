@@ -22,6 +22,15 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface
      * @property string $auth_key
      */
 
+
+
+    public static function tableName()
+    {
+        return '{{%user}}';
+    }
+
+
+
     //helpers
     public function sePassword($password){
         $this->password_hash = Yii::$app->security->generatePasswordHash($password);

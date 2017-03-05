@@ -19,7 +19,7 @@ class UserSearch extends User
     {
         return [
             [['id', 'status', 'created_at', 'updated_at'], 'integer'],
-            [['username', 'auth_key', 'password_hash', 'password_reset_token', 'email'], 'safe'],
+            [['username', 'email'], 'safe'],
         ];
     }
 
@@ -50,6 +50,7 @@ class UserSearch extends User
         ]);
 
         $this->load($params);
+
 
         if (!$this->validate()) {
             // uncomment the following line if you do not want to return any records when validation fails
