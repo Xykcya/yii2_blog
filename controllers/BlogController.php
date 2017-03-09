@@ -13,7 +13,7 @@ use app\models\ContactForm;
 
 class BlogController extends Controller
 {
-//    public $layout = 'site';
+    public $layout = 'blog';
 
     public function actionIndex()//todo pagination
     {
