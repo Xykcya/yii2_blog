@@ -44,8 +44,7 @@ class PostController extends Controller
         $comment->post_id = $post->id;
         $comment->date_created = date('Y-m-d H:i:s');//hack todo
 
-
-
+        $arrComments = $post->getComments()->orderBy('id')->all();
 
 
         if ($comment->load(Yii::$app->request->post() ) && $comment->save()) {
@@ -55,7 +54,8 @@ class PostController extends Controller
 
         return $this->render('view', [
             'model' => $post,
-            'comment' => $comment
+            'newComment' => $comment,
+            'arrComments' => $arrComments
         ]);
     }
 
