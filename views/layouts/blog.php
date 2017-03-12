@@ -8,6 +8,7 @@ use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use app\assets\AppAsset;
+use yii\helpers\Url;
 
 AppAsset::register($this);
 ?>
@@ -48,6 +49,24 @@ AppAsset::register($this);
 <body>
 <?php $this->beginBody() ?>
 <!-- Navigation -->
+<?php  $siteHeading = '
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="site-heading">
+                    <h1>Yii2 blog</h1>
+                    <hr class="small">
+                    <span class="subheading">Or just attempt to create it</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>';
+?>
+
+<?=$siteHeading?>
+
 <nav class="navbar navbar-default navbar-custom navbar-fixed-top">
     <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
@@ -63,16 +82,33 @@ AppAsset::register($this);
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
                 <li>
-                    <a href="index.html">Home</a>
+                    <a href="<?=Url::to(['site/index']) ?>">Home</a>
                 </li>
                 <li>
-                    <a href="about.html">About</a>
+                    <a href="<?=Url::to(['blog/index']) ?>">Blog</a>
                 </li>
+
                 <li>
-                    <a href="post.html">Sample Post</a>
+                    <?php if(Yii::$app->user->isGuest): ?>
+                        <a href="<?=Url::to(['site/login']) ?>">Login</a>
+                    <?php else: ?>
+
+<!--                        --><?php
+//                        echo Html::beginForm(['/site/logout'], 'post')
+//                        . Html::submitButton(
+//                        'Logout (' . Yii::$app->user->identity->username . ')',
+//                        ['class' => 'btn btn-link logout']
+//                        )
+//                        . Html::endForm();
+//                            ?>
+
+                    <?php endif; ?>
                 </li>
+
                 <li>
-                    <a href="contact.html">Contact</a>
+                <?php if (\Yii::$app->user->can('admin')): ?>
+                    <a href="<?= Url::to(['admin/post'])?>" >Admin</a>
+                <?php endif; ?>
                 </li>
             </ul>
         </div>

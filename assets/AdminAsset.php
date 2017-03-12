@@ -13,23 +13,15 @@ use yii\web\AssetBundle;
  * @author Qiang Xue <qiang.xue@gmail.com>
  * @since 2.0
  */
-class AppAsset extends AssetBundle
+class AdminAsset extends AssetBundle
 {
-    public $basePath = '@webroot';
+    public $basePath = '@webroot';//directory that contains the asset files in this bundle
     public $baseUrl = '@web';
+
     public $css = [
-        'css/bootstrap.min.css',
-        'css/clean-blog.css'
+        'css/site.css',
     ];
     public $js = [
-
-
-        'vendor/jquery/jquery.min.js',
-        'vendor/bootstrap/js/bootstrap.min.js',
-        'js/jqBootstrapValidation.js',
-        'js/contact_me.js',
-        'js/clean-blog.min.js',
-
 
     ];
     public $depends = [

@@ -37,7 +37,7 @@ class Post extends \yii\db\ActiveRecord
                 'class' => TimestampBehavior::className(),
                 'attributes' => [
                     ActiveRecord::EVENT_BEFORE_INSERT => ['date_created', 'date_modified'],
-                    ActiveRecord::EVENT_BEFORE_UPDATE => ['date_created'],
+                    ActiveRecord::EVENT_BEFORE_UPDATE => ['date_modified'],
                 ],
                  'value' => new Expression('NOW()'),
             ],

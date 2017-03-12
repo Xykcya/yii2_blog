@@ -27,6 +27,7 @@ use app\models\AccountActivation;
 
 class SiteController extends Controller
 {
+    public $layout = 'blog';
     /**
      * @inheritdoc
      */
@@ -47,7 +48,7 @@ class SiteController extends Controller
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    'logout' => ['post'],
+//                    'logout' => ['post'],
                 ],
             ],
         ];
