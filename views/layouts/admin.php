@@ -7,14 +7,13 @@ use yii\helpers\Html;
 use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
+use yii\web\UrlManager;
+
 use app\assets\AdminAsset;
 
 AdminAsset::register($this);
 
-
-
 ?>
-
 
 
 <?php $this->beginPage() ?>
@@ -27,7 +26,8 @@ AdminAsset::register($this);
     <?= Html::csrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
-    <link href="/site.css" type="text/css" >
+
+
 </head>
 <body>
 <?php $this->beginBody() ?>
@@ -79,6 +79,9 @@ AdminAsset::register($this);
     </div>
 </footer>
 
+
+
 <?php $this->endBody() ?>
 </body>
 </html>
+<?php $this->endPage() ?>
